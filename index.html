@@ -1,34 +1,41 @@
-<!doctype html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>kanzou</title>
-</head>
-<body>
-	<h1>KANZOU</h1>
-	<h3>これより下はAPIテスト用領域</h3>
-	<div class="api_view_area">
-	</div>
-	<h3>ここまで領域</h3>
-</body>
-<script>
-	var xhr = new XMLHttpRequest()
-	var requestURL = 'https://github.com/kanzou/api_test/blob/master/api/test/test.json'
-	
-	xhr.open( 'GET', requestURL, true );
-	xhr.onreadystatechange = function()
-	{
-		if(
-			( xhr.readyState === 4 && ( xhr.status === 200 || xhr.status === 0 ) )
-		) {
-			// var json = JSON.parse( xhr.responseText );
-			alert( xhr.responseText );
-		}
-		else {
-			console.log( "failed..." );
-		}
-	};
-	
-	xhr.send( null );
-</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+  </head>
+  <body>
+    <form onsubmit="zipcode(); return false;">
+      郵便番号：
+      <input type="text" name="postcode" id="postcode" />
+      <input type="submit" value="送信" />
+      <input type="reset" value="リセット" />
+    </form>
+    <textarea rows="100" cols="100" id="output" readonly></textarea>
+    <script type="text/javascript">
+      var URL = 'http://zipcloud.ibsnet.co.jp/api/search?zipcode=';
+
+      function zipcode(){
+        var postcode = document.getElementById('postcode').value;
+        <!-- URLにpostcodeの値(入力値)を加える -->
+        var requestURL = URL + postcode;
+        var request = new XMLHttpRequest();
+        <!-- URLにGETリクエストを投げる -->
+        request.open( "GET", requestURL, true );
+        request.send(null);
+        <!-- readyStateが変わる度に呼び出される -->
+        request.onreadystatechange = function(){
+          if(request.readyState == 4){
+            if(request.status == 200){
+              <!-- レスポンスが返ってきたらテキストエリアに代入する -->
+              document.getElementById("output").value = request.responseText;
+            }
+          }
+        }
+        return false;
+      }
+    </script>
+  </body>
 </html>
