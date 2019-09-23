@@ -24,6 +24,7 @@
         var request = new XMLHttpRequest();
         <!-- URLにGETリクエストを投げる -->
         request.open( "GET", requestURL, true );
+        request.responseType = '.json'
         request.send(null);
         <!-- readyStateが変わる度に呼び出される -->
         request.onreadystatechange = function(){
